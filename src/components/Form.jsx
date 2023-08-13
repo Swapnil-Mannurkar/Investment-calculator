@@ -1,43 +1,24 @@
 import React, { useRef } from "react";
-import Table from "./Table";
 
-const Form = () => {
+const Form = (props) => {
   let currentSavingInput = useRef();
   let yearlySavingInput = useRef();
   let expectIntrestInput = useRef();
   let investmentDurationInput = useRef();
-  const yearlyData = [];
 
   const clickSubmitHandler = (event) => {
     event.preventDefault();
+
     const userInput = {
       "current-savings": currentSavingInput.current.value,
       "yearly-contribution": yearlySavingInput.current.value,
       "expected-return": expectIntrestInput.current.value,
       duration: investmentDurationInput.current.value,
     };
-    calculateHandler(userInput);
-  };
 
-  const calculateHandler = (userInput) => {
-    let currentSavings = +userInput["current-savings"];
-    const yearlyContribution = +userInput["yearly-contribution"];
-    const expectedReturn = +userInput["expected-return"] / 100;
-    const duration = +userInput["duration"];
+    const initalInvestment = currentSavingInput.current.value;
 
-    for (let i = 0; i < duration; i++) {
-      const yearlyInterest = currentSavings * expectedReturn;
-      currentSavings += yearlyInterest + yearlyContribution;
-      yearlyData.push({
-        year: i + 1,
-        yearlyInterest: yearlyInterest,
-        savingsEndOfYear: currentSavings,
-        yearlyContribution: yearlyContribution,
-      });
-    }
-
-    console.log(yearlyData);
-    <Table props={yearlyData} />;
+    props.onCalculate(userInput, initalInvestment);
   };
 
   const resetHandler = () => {

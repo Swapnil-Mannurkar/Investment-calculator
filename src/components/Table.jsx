@@ -1,10 +1,14 @@
 import React from "react";
 
+const formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+
 const Table = (props) => {
   return (
-    /* Todo: Show below table conditionally (only once result data is available) */
-    /* Show fallback text if no data is available */
-
     <table className="result">
       <thead>
         <tr>
@@ -16,13 +20,24 @@ const Table = (props) => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>YEAR NUMBER</td>
-          <td>TOTAL SAVINGS END OF YEAR</td>
-          <td>INTEREST GAINED IN YEAR</td>
-          <td>TOTAL INTEREST GAINED</td>
-          <td>TOTAL INVESTED CAPITAL</td>
-        </tr>
+        {props.results.map((result) => (
+          <tr key={result.year}>
+            <td>{result.year}</td>
+            <td>{formatter.format(result.savingsEndOfYear)}</td>
+            <td>{formatter.format(result.yearlyInterest)}</td>
+            <td>
+              {formatter.format(
+                result.savingsEndOfYear -
+                  props.initalInvestment -
+                  result.yearlyContribution * result.year
+              )}
+            </td>
+            <td>
+              {Number(props.initalInvestment) +
+                result.yearlyContribution * result.year}
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
