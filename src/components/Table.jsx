@@ -1,6 +1,6 @@
 import React from "react";
 
-const Table = () => {
+const Table = (props) => {
   return (
     /* Todo: Show below table conditionally (only once result data is available) */
     /* Show fallback text if no data is available */
