@@ -8,7 +8,6 @@ function App() {
   const [initalInvestment, setinitalInvestment] = useState();
   const yearlyData = [];
 
-
   const calculateHandler = (userInput, initalInvestment) => {
     let currentSavings = +userInput["current-savings"];
     const yearlyContribution = +userInput["yearly-contribution"];
